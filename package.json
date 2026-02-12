@@ -1,0 +1,51 @@
+{
+  "name": "@mcp-tool-shop/consensus-os",
+  "version": "0.1.0",
+  "description": "Modular control plane safeguarding distributed consensus systems",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./plugin": {
+      "types": "./dist/plugins/api.d.ts",
+      "import": "./dist/plugins/api.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcp-tool-shop-org/ConsensusOS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mcp-tool-shop-org/ConsensusOS/issues"
+  },
+  "homepage": "https://github.com/mcp-tool-shop-org/ConsensusOS#readme",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ]
+}
