@@ -79,3 +79,26 @@ export type {
 // CLI
 export { dispatch, registeredCommands, main as runCli } from "./cli/cli.js";
 export type { CliContext, CommandResult, CommandHandler } from "./cli/cli.js";
+
+// Governor
+export { GovernorPlugin, createGovernorPlugin } from "./modules/governor/governor-plugin.js";
+export type { GovernorPluginConfig } from "./modules/governor/governor-plugin.js";
+export { TokenIssuer } from "./modules/governor/token-issuer.js";
+export { PolicyEngine, cpuThresholdRule, memoryThresholdRule, priorityThrottleRule, queueDepthRule } from "./modules/governor/policy-engine.js";
+export type { PolicyEvaluation } from "./modules/governor/policy-engine.js";
+export { BuildQueue } from "./modules/governor/build-queue.js";
+export { AuditLog } from "./modules/governor/audit-log.js";
+export type {
+  ExecutionToken,
+  TokenRequest,
+  ResourceLimits,
+  ResourceUsage,
+  QueuedTask,
+  TaskSubmission,
+  TaskExecutor,
+  TaskStatus,
+  PolicyRule,
+  PolicyVerdict,
+  AuditAction,
+  AuditEntry,
+} from "./modules/governor/types.js";
