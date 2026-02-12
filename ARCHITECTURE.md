@@ -1,7 +1,8 @@
-# ConsensusOS Architecture
+# ConsensusOS v1.0 — Architecture Specification
 
-> Phase 1 — Foundation  
-> Last updated: 2025-01-01
+> **FROZEN** — This document describes the v1.0 architecture.  
+> Breaking changes require a major version bump.  
+> Last updated: 2025-07-24
 
 ---
 
@@ -228,22 +229,70 @@ stop (reverse order) → destroy (reverse order)
 ```
 ConsensusOS/
 ├── src/
-│   ├── index.ts                 # Barrel exports
+│   ├── index.ts                 # Barrel exports (public API surface)
 │   ├── plugins/
-│   │   └── api.ts               # Plugin API v1 — interfaces & types
+│   │   └── api.ts               # Plugin API v1 — FROZEN contract
 │   ├── core/
-│   │   ├── event-bus.ts         # CoreEventBus implementation
-│   │   ├── invariant-engine.ts  # CoreInvariantEngine implementation
+│   │   ├── event-bus.ts         # CoreEventBus (pub/sub, wildcard, history)
+│   │   ├── invariant-engine.ts  # CoreInvariantEngine (fail-closed)
 │   │   ├── loader.ts            # CoreLoader — lifecycle orchestration
 │   │   └── logger.ts            # Structured console logger
+│   ├── state/
+│   │   └── registry.ts          # CoreStateRegistry — state tracking
+│   ├── modules/
+│   │   ├── health/
+│   │   │   └── health-sentinel.ts
+│   │   ├── verifier/
+│   │   │   └── release-verifier.ts
+│   │   ├── config/
+│   │   │   └── config-guardian.ts
+│   │   ├── sandbox/
+│   │   │   ├── types.ts
+│   │   │   ├── in-memory-runtime.ts
+│   │   │   ├── snapshot-serializer.ts
+│   │   │   ├── replay-engine.ts
+│   │   │   ├── amendment-simulator.ts
+│   │   │   └── sandbox-plugin.ts
+│   │   └── governor/
+│   │       ├── types.ts
+│   │       ├── audit-log.ts
+│   │       ├── token-issuer.ts
+│   │       ├── policy-engine.ts
+│   │       ├── build-queue.ts
+│   │       └── governor-plugin.ts
+│   ├── adapters/
+│   │   ├── chain-adapter.ts     # ChainAdapter interface
+│   │   ├── adapter-registry.ts  # AdapterRegistry — lifecycle management
+│   │   ├── xrpl/
+│   │   │   └── xrpl-adapter.ts
+│   │   ├── ethereum/
+│   │   │   └── ethereum-adapter.ts
+│   │   └── cosmos/
+│   │       └── cosmos-adapter.ts
+│   ├── sdk/
+│   │   ├── plugin-sdk.ts        # BasePlugin, ManifestBuilder, validatePlugin
+│   │   └── attestation.ts       # AttestationPipeline — signed build verification
+│   ├── cli/
+│   │   └── cli.ts               # CLI entry point
 │   └── mocks/
-│       ├── echo-plugin.ts       # Wildcard subscriber (testing)
-│       ├── health-sentinel-plugin.ts  # Invariant registration example
-│       └── config-guardian-plugin.ts  # Dependency & config example
+│       ├── echo-plugin.ts
+│       ├── health-sentinel-plugin.ts
+│       └── config-guardian-plugin.ts
 ├── tests/
-│   ├── event-bus.test.ts        # 9 tests
-│   ├── invariant-engine.test.ts # 9 tests
-│   └── loader.test.ts           # 12 tests
+│   ├── architecture.test.ts     # 16 structural invariant tests
+│   ├── event-bus.test.ts
+│   ├── invariant-engine.test.ts
+│   ├── loader.test.ts
+│   ├── state-registry.test.ts
+│   ├── health-sentinel.test.ts
+│   ├── release-verifier.test.ts
+│   ├── config-guardian.test.ts
+│   ├── sandbox-*.test.ts        # 5 sandbox test files
+│   ├── governor-*.test.ts       # 5 governor test files
+│   ├── adapter-*.test.ts        # 4 adapter test files
+│   ├── plugin-sdk.test.ts
+│   └── attestation.test.ts
+├── ARCHITECTURE.md              # This file
 ├── package.json
 ├── tsconfig.json
 └── vitest.config.ts
@@ -291,16 +340,41 @@ if (!verdict.allowed) {
 
 ---
 
+## Module Boundaries
+
+### Allowed Import Graph
+
+```
+modules/* ──▶ plugins/api.ts, core/*
+adapters/* ──▶ plugins/api.ts, core/*, adapters/chain-adapter.ts
+sdk/*      ──▶ plugins/api.ts
+cli/*      ──▶ anything
+core/*     ──▶ plugins/api.ts, node: builtins ONLY
+```
+
+### Forbidden Imports (enforced by tests/architecture.test.ts)
+
+- Module → Module (cross-module)
+- Module → Adapter
+- Core → Module
+- Core → Adapter
+- Core → SDK
+
+### Version Constants
+
+- `ARCHITECTURE_VERSION = "1.0"` — structural changes require major bump
+- `PLUGIN_API_VERSION = "1.0"` — plugin contract version
+
+---
+
 ## Testing Strategy
 
-- **Unit tests**: Each core component (event bus, invariant engine, loader) is tested in isolation
-- **Integration tests**: Loader tests boot multiple plugins together to verify cross-cutting behavior
-- **Mock plugins**: Three mock plugins exercise different capabilities:
-  - `EchoPlugin` — wildcard subscriber, verifies event bus wiring
-  - `HealthSentinelPlugin` — registers invariants, emits events, configurable via context
-  - `ConfigGuardianPlugin` — declares dependency on health-sentinel, validates config
+- **Unit tests**: Each component tested in isolation (246+ tests)
+- **Integration tests**: Loader boots multiple plugins to verify cross-cutting behavior
+- **Architecture tests**: 16 structural invariant tests enforce boundaries
+- **Mock plugins**: Three mock plugins exercise different capabilities
 
-**Test coverage target:** 30/30 tests passing (9 + 9 + 12)
+**Test coverage target:** 246+ tests all passing
 
 ---
 
@@ -309,10 +383,10 @@ if (!verdict.allowed) {
 | Phase | Focus | Status |
 |-------|-------|--------|
 | **1 — Foundation** | Core architecture, Plugin API, Event Bus, Invariant Engine, Loader | ✅ Complete |
-| 2 — Core Modules | Health Sentinel, Release Verifier, Config Guardian (real), CLI, XRPL Adapter v1 | Planned |
-| 3 — Sandbox Engine | Docker simulation, snapshot injection, amendment simulation, replay | Planned |
-| 4 — Governor Layer | Token-based execution, CPU/RAM throttling, build queue, policy engine | Planned |
-| 5 — Platform Expansion | Multi-chain adapters, public plugin SDK, docs portal, CI/CD attestation | Planned |
+| **2 — Core Modules** | Health Sentinel, Release Verifier, Config Guardian, CLI, XRPL Adapter | ✅ Complete |
+| **3 — Sandbox Engine** | Snapshot serializer, replay engine, amendment simulator | ✅ Complete |
+| **4 — Governor Layer** | Token issuer, policy engine, build queue, audit log | ✅ Complete |
+| **5 — Platform Expansion** | Multi-chain adapters, Plugin SDK, attestation pipeline | ✅ Complete |
 
 ---
 
@@ -324,3 +398,4 @@ if (!verdict.allowed) {
 4. **Factory pattern** — plugins exported as factories so the core controls instantiation timing
 5. **Fire-and-forget async handlers** — event bus dispatches synchronously; async handlers run concurrently but errors are caught and logged, never propagated
 6. **Kahn's algorithm** — deterministic topological sort for dependency resolution; circular dependencies are a hard error
+7. **FROZEN Plugin API** — v1 contract is stable; no breaking changes without major version bump

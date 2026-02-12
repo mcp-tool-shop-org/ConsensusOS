@@ -1,11 +1,23 @@
 /**
  * ConsensusOS Plugin API v1
  *
+ * ╔══════════════════════════════════════════════════════════════════╗
+ * ║  FROZEN — Plugin API v1 is stable.                             ║
+ * ║  No breaking changes permitted without a major version bump.   ║
+ * ║  Additions must be backward-compatible (new optional fields).  ║
+ * ╚══════════════════════════════════════════════════════════════════╝
+ *
  * Every module in ConsensusOS is a plugin. Plugins declare their identity,
  * capabilities, and lifecycle hooks. The core loader discovers, validates,
  * and orchestrates plugin lifecycles. Plugins never call each other directly —
  * all inter-module communication flows through the event bus.
  */
+
+/** Architecture version — bump only on structural changes */
+export const ARCHITECTURE_VERSION = "1.0" as const;
+
+/** Plugin API version — frozen at v1 */
+export const PLUGIN_API_VERSION = "1.0" as const;
 
 // ─── Plugin Identity ────────────────────────────────────────────────
 

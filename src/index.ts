@@ -19,6 +19,10 @@ export type {
   TransitionVerdict,
 } from "./core/invariant-engine.js";
 export type { LoaderOptions, PluginState } from "./core/loader.js";
+export {
+  ARCHITECTURE_VERSION,
+  PLUGIN_API_VERSION,
+} from "./plugins/api.js";
 export type {
   Plugin,
   PluginManifest,
