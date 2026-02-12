@@ -50,6 +50,32 @@ export { ConfigGuardian, createConfigGuardian } from "./modules/config/config-gu
 // Adapters
 export { XrplAdapter, createXrplAdapter } from "./adapters/xrpl/xrpl-adapter.js";
 
+// Sandbox
+export { SandboxPlugin, createSandboxPlugin } from "./modules/sandbox/sandbox-plugin.js";
+export { SnapshotSerializer } from "./modules/sandbox/snapshot-serializer.js";
+export { ReplayEngine } from "./modules/sandbox/replay-engine.js";
+export type { ReplayHandler } from "./modules/sandbox/replay-engine.js";
+export { AmendmentSimulator } from "./modules/sandbox/amendment-simulator.js";
+export type { AmendmentEffect, AmendmentDefinition } from "./modules/sandbox/amendment-simulator.js";
+export { InMemoryContainerRuntime } from "./modules/sandbox/in-memory-runtime.js";
+export type {
+  ContainerRuntime,
+  ContainerSpec,
+  ContainerStatus,
+  ContainerState,
+  ContainerInfo,
+  ExecResult,
+  SandboxSession,
+  SandboxState,
+  Snapshot,
+  AmendmentState,
+  AmendmentStatus,
+  AmendmentSimulationResult,
+  StateDiff,
+  ReplayOptions,
+  ReplayResult,
+} from "./modules/sandbox/types.js";
+
 // CLI
 export { dispatch, registeredCommands, main as runCli } from "./cli/cli.js";
 export type { CliContext, CommandResult, CommandHandler } from "./cli/cli.js";
