@@ -157,6 +157,11 @@ export class CoreLoader {
     return [...this.plugins.keys()];
   }
 
+  /** Get a plugin instance by ID */
+  getPlugin(id: PluginId): Plugin | undefined {
+    return this.plugins.get(id)?.plugin;
+  }
+
   // ── Internal Lifecycle ──────────────────────────────────────────
 
   private async initPlugin(id: PluginId): Promise<void> {

@@ -32,3 +32,24 @@ export type {
   LifecycleResult,
   Logger,
 } from "./plugins/api.js";
+
+// State
+export { CoreStateRegistry } from "./state/registry.js";
+export type {
+  StateRegistry,
+  StateEntry,
+  StateTransition,
+  StateSnapshot,
+} from "./state/registry.js";
+
+// Modules
+export { HealthSentinel, createHealthSentinel } from "./modules/health/health-sentinel.js";
+export { ReleaseVerifier, createReleaseVerifier } from "./modules/verifier/release-verifier.js";
+export { ConfigGuardian, createConfigGuardian } from "./modules/config/config-guardian.js";
+
+// Adapters
+export { XrplAdapter, createXrplAdapter } from "./adapters/xrpl/xrpl-adapter.js";
+
+// CLI
+export { dispatch, registeredCommands, main as runCli } from "./cli/cli.js";
+export type { CliContext, CommandResult, CommandHandler } from "./cli/cli.js";

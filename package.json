@@ -1,6 +1,6 @@
 {
   "name": "@mcp-tool-shop/consensus-os",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Modular control plane safeguarding distributed consensus systems",
   "type": "module",
   "main": "dist/index.js",
@@ -13,14 +13,22 @@
     "./plugin": {
       "types": "./dist/plugins/api.d.ts",
       "import": "./dist/plugins/api.js"
+    },
+    "./cli": {
+      "types": "./dist/cli/cli.d.ts",
+      "import": "./dist/cli/cli.js"
     }
+  },
+  "bin": {
+    "consensusos": "./dist/cli/bin.js"
   },
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "start": "node dist/cli/bin.js"
   },
   "engines": {
     "node": ">=18"
