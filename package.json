@@ -1,5 +1,5 @@
 {
-  "name": "@mcp-tool-shop/consensus-os",
+  "name": "@mcptoolshop/consensus-os",
   "version": "1.0.0",
   "description": "Modular control plane safeguarding distributed consensus systems",
   "type": "module",
