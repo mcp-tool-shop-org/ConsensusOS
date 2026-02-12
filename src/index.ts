@@ -102,3 +102,31 @@ export type {
   AuditAction,
   AuditEntry,
 } from "./modules/governor/types.js";
+
+// Multi-chain Adapter Framework
+export type {
+  ChainAdapter,
+  ChainAdapterFactory,
+  ChainConfig,
+  ChainFamily,
+  ChainInfo,
+  ChainNode,
+  ChainQueryResult,
+  ConnectionStatus,
+} from "./adapters/chain-adapter.js";
+export { AdapterRegistry } from "./adapters/adapter-registry.js";
+export { EthereumAdapter, createEthereumAdapter } from "./adapters/ethereum/ethereum-adapter.js";
+export { CosmosAdapter, createCosmosAdapter } from "./adapters/cosmos/cosmos-adapter.js";
+
+// Plugin SDK
+export { BasePlugin, ManifestBuilder, validatePlugin } from "./sdk/plugin-sdk.js";
+export type { ValidationResult } from "./sdk/plugin-sdk.js";
+
+// Release Attestation
+export { AttestationPipeline } from "./sdk/attestation.js";
+export type {
+  Attestation,
+  AttestationOptions,
+  BuildProvenance,
+  ArtifactRecord,
+} from "./sdk/attestation.js";
