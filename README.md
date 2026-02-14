@@ -2,9 +2,11 @@
 
 > Modular, zero-dependency control plane for multi-chain consensus governance.
 
-[![Tests](https://img.shields.io/badge/tests-295%20passing-brightgreen)](#)
-[![Dependencies](https://img.shields.io/badge/dependencies-0-blue)](#)
-[![License](https://img.shields.io/badge/license-MIT-green)](#)
+<p align="center">
+  <a href="https://github.com/mcp-tool-shop-org/ConsensusOS/actions"><img src="https://img.shields.io/github/actions/workflow/status/mcp-tool-shop-org/ConsensusOS/ci.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
+  <img src="https://img.shields.io/badge/dependencies-0-blue?style=flat-square" alt="Dependencies: 0">
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/mcp-tool-shop-org/ConsensusOS?style=flat-square" alt="License"></a>
+</p>
 
 ## What is ConsensusOS?
 
