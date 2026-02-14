@@ -97,6 +97,11 @@ Test categories:
 - **Stress** (22 tests) — edge cases and throughput
 - **Unit** (230 tests) — component-level coverage
 
+## Support
+
+- **Questions / help:** [Discussions](https://github.com/mcp-tool-shop-org/ConsensusOS/discussions)
+- **Bug reports:** [Issues](https://github.com/mcp-tool-shop-org/ConsensusOS/issues)
+
 ## License
 
 MIT
