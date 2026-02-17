@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" width="200" alt="ConsensusOS">
+</p>
+
 # ConsensusOS v1.0.0
 
 > Part of [MCP Tool Shop](https://mcptoolshop.com)
