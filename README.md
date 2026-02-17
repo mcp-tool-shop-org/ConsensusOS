@@ -1,5 +1,8 @@
 # ConsensusOS v1.0.0
 
+> Part of [MCP Tool Shop](https://mcptoolshop.com)
+
+
 > Modular, zero-dependency control plane for multi-chain consensus governance.
 
 <p align="center">
