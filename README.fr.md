@@ -8,9 +8,9 @@
 
 # ConsensusOS
 
-> Part of [MCP Tool Shop](https://mcptoolshop.com)
+> Fait partie de [MCP Tool Shop](https://mcptoolshop.com)
 
-**Modular, zero-dependency control plane for multi-chain consensus governance.**
+**Plateforme de contrôle modulaire et sans dépendances pour la gouvernance de consensus multi-chaînes.**
 
 <p align="center">
   <a href="https://github.com/mcp-tool-shop-org/ConsensusOS/actions"><img src="https://img.shields.io/github/actions/workflow/status/mcp-tool-shop-org/ConsensusOS/npm.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
@@ -22,34 +22,34 @@
 
 ---
 
-## Why ConsensusOS?
+## Pourquoi ConsensusOS ?
 
-Running multi-chain infrastructure means trusting nodes you don't fully control, shipping releases that must not diverge, and governing configuration changes across networks that never sleep. Most teams glue this together with ad-hoc scripts and hope for the best.
+Exploiter une infrastructure multi-chaînes implique de faire confiance à des nœuds que vous ne contrôlez pas entièrement, de déployer des versions qui ne doivent pas diverger et de gérer les modifications de configuration sur des réseaux qui ne s'arrêtent jamais. La plupart des équipes mettent tout cela en place avec des scripts ad hoc et espèrent le meilleur.
 
-ConsensusOS replaces that hope with a **plugin-based control plane** where every module communicates through a shared event bus, every state transition is gated by fail-closed invariants, and the entire system history is deterministically replayable.
+ConsensusOS remplace cet espoir par une **plateforme de contrôle basée sur des plugins**, où chaque module communique via un bus d'événements partagé, chaque transition d'état est protégée par des invariants de type "échec fermé" et l'ensemble de l'historique du système peut être rejoué de manière déterministe.
 
-- **Zero production dependencies** — nothing in your supply chain you didn't write.
-- **Frozen Plugin API v1** — stable contract that won't break your integrations.
-- **Fail-closed invariants** — invalid transitions are always rejected, never partially applied.
-- **Deterministic replay** — reproduce any system state from event history.
-- **Resource-bounded execution** — CPU, memory, and time limits enforced via tokens.
-- **Multi-chain adapters** — XRPL, Ethereum, and Cosmos out of the box.
+- **Aucune dépendance de production** — rien dans votre chaîne d'approvisionnement que vous n'ayez pas écrit vous-même.
+- **API de plugin v1 figée** — contrat stable qui ne cassera pas vos intégrations.
+- **Invariants de type "échec fermé"** — les transitions invalides sont toujours rejetées, et ne sont jamais appliquées partiellement.
+- **Rejeu déterministe** — reproduire n'importe quel état du système à partir de l'historique des événements.
+- **Exécution limitée en ressources** — limites de CPU, de mémoire et de temps appliquées via des jetons.
+- **Adaptateurs multi-chaînes** — XRPL, Ethereum et Cosmos prêts à l'emploi.
 
 ---
 
-## Install
+## Installation
 
 ```bash
 npm install @mcptoolshop/consensus-os
 ```
 
-Requires **Node.js 18+**. Zero runtime dependencies.
+Nécessite **Node.js 18+**. Aucune dépendance d'exécution.
 
 ---
 
-## Quick Start
+## Démarrage rapide
 
-### Programmatic usage
+### Utilisation par programmation
 
 ```ts
 import {
@@ -89,7 +89,7 @@ console.log("Transition allowed:", verdict.allowed);
 await loader.shutdown();
 ```
 
-### Build a custom plugin
+### Créer un plugin personnalisé
 
 ```ts
 import { BasePlugin, ManifestBuilder } from "@mcptoolshop/consensus-os/plugin";
@@ -110,7 +110,7 @@ class MyMonitor extends BasePlugin {
 }
 ```
 
-### CLI
+### Ligne de commande (CLI)
 
 ```bash
 npx consensusos doctor     # Run health checks
@@ -144,49 +144,49 @@ npx consensusos adapters   # List and query chain adapters
 └─────────────────────────────────────────────────┘
 ```
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the full specification.
+Voir [ARCHITECTURE.md](ARCHITECTURE.md) pour la spécification complète.
 
 ---
 
-## API Surface
+## API
 
-### Core
+### Noyau
 
-| Export | Description |
-|--------|-------------|
-| `CoreLoader` | Plugin lifecycle orchestrator — register, boot, shutdown |
-| `CoreEventBus` | Ordered, typed, replayable event bus with wildcard subscriptions |
-| `CoreInvariantEngine` | Fail-closed invariant engine with append-only registration |
-| `createLogger(scope)` | Structured logger scoped to a module |
+| Exportation | Description |
+| -------- | ------------- |
+| `CoreLoader` | Orchestrateur du cycle de vie des plugins — enregistrement, démarrage, arrêt. |
+| `CoreEventBus` | Bus d'événements ordonné, typé et rejouable avec abonnements wildcard. |
+| `CoreInvariantEngine` | Moteur d'invariants de type "échec fermé" avec enregistrement en écriture seule. |
+| `createLogger(scope)` | Journaliseur structuré, spécifique à un module. |
 
 ### Modules
 
-| Factory | Purpose |
-|---------|---------|
-| `createHealthSentinel()` | Node health monitoring via heartbeats |
-| `createReleaseVerifier()` | Software release hash verification |
-| `createConfigGuardian()` | Configuration schema validation and migration |
-| `createSandboxPlugin()` | Isolated simulation, replay, and amendment engine |
-| `createGovernorPlugin()` | Token-based execution, policy enforcement, build queue |
+| Fabrique | Objectif |
+| --------- | --------- |
+| `createHealthSentinel()` | Surveillance de la santé des nœuds via des signaux de vie. |
+| `createReleaseVerifier()` | Vérification de la somme de contrôle des versions logicielles. |
+| `createConfigGuardian()` | Validation et migration du schéma de configuration. |
+| `createSandboxPlugin()` | Moteur de simulation, de rejeu et de modification isolé. |
+| `createGovernorPlugin()` | Exécution basée sur des jetons, application de politiques, file d'attente de construction. |
 
-### Adapters
+### Adaptateurs
 
-| Factory | Chain | Status |
-|---------|-------|--------|
-| `createXrplAdapter()` | XRPL | Implemented |
-| `createEthereumAdapter()` | Ethereum | Implemented |
-| `createCosmosAdapter()` | Cosmos | Implemented |
+| Fabrique | Chain | Statut |
+| --------- | ------- | -------- |
+| `createXrplAdapter()` | XRPL | Implémenté |
+| `createEthereumAdapter()` | Ethereum | Implémenté |
+| `createCosmosAdapter()` | Cosmos | Implémenté |
 
-### Plugin SDK
+### SDK de plugin
 
-| Export | Description |
-|--------|-------------|
-| `BasePlugin` | Abstract base class with lifecycle defaults and convenience methods |
-| `ManifestBuilder` | Fluent builder for type-safe plugin manifests |
-| `validatePlugin()` | Pre-registration validation with errors and warnings |
-| `AttestationPipeline` | Release attestation and build provenance |
+| Exportation | Description |
+| -------- | ------------- |
+| `BasePlugin` | Classe de base abstraite avec valeurs par défaut du cycle de vie et méthodes pratiques. |
+| `ManifestBuilder` | Constructeur fluent pour les manifestes de plugins typés. |
+| `validatePlugin()` | Validation de pré-enregistrement avec erreurs et avertissements. |
+| `AttestationPipeline` | Attestation de version et provenance de la construction. |
 
-### Subpath Exports
+### Exports de sous-chemins
 
 ```ts
 import { ... } from "@mcptoolshop/consensus-os";          // Full API
@@ -196,45 +196,45 @@ import { ... } from "@mcptoolshop/consensus-os/cli";      // CLI dispatch
 
 ---
 
-## Testing
+## Tests
 
 ```bash
 npm test         # Full suite (295 tests)
 npx vitest       # Watch mode
 ```
 
-Test categories:
-- **Architecture** (16 tests) — structural invariant enforcement
-- **Security** (27 tests) — abuse resistance and determinism
-- **Stress** (22 tests) — edge cases and throughput
-- **Unit** (230 tests) — component-level coverage
+Catégories de tests :
+- **Architecture** (16 tests) — application d'invariants structurels.
+- **Sécurité** (27 tests) — résistance aux abus et déterminisme.
+- **Charge** (22 tests) — cas limites et débit.
+- **Unitaires** (230 tests) — couverture au niveau des composants.
 
 ---
 
 ## Documentation
 
-| Document | Purpose |
-|----------|---------|
-| [QUICKSTART.md](QUICKSTART.md) | Get running in 3 minutes |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Frozen v1.0 architecture spec |
-| [PLUGIN_GUIDE.md](PLUGIN_GUIDE.md) | How to write a plugin |
-| [ADAPTER_GUIDE.md](ADAPTER_GUIDE.md) | How to create a chain adapter |
-| [SANDBOX_GUIDE.md](SANDBOX_GUIDE.md) | Sandbox, replay, and amendment walkthrough |
-| [GOVERNOR_GUIDE.md](GOVERNOR_GUIDE.md) | Token execution, policies, build queue |
-| [SECURITY.md](SECURITY.md) | Security policy and vulnerability reporting |
-| [THREAT_MODEL.md](THREAT_MODEL.md) | STRIDE threat analysis |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Development workflow and PR checklist |
-| [BUILD.md](BUILD.md) | Reproducible build and verification |
+| Documentation | Objectif |
+| ---------- | --------- |
+| [QUICKSTART.md](QUICKSTART.md) | Mise en route en 3 minutes |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Spécification de l'architecture v1.0 figée. |
+| [PLUGIN_GUIDE.md](PLUGIN_GUIDE.md) | Comment écrire un plugin |
+| [ADAPTER_GUIDE.md](ADAPTER_GUIDE.md) | Comment créer un adaptateur de chaîne |
+| [SANDBOX_GUIDE.md](SANDBOX_GUIDE.md) | Tests en bac à sable, relecture et guide de modification. |
+| [GOVERNOR_GUIDE.md](GOVERNOR_GUIDE.md) | Exécution des jetons, politiques, file d'attente de construction. |
+| [SECURITY.md](SECURITY.md) | Politique de sécurité et signalement des vulnérabilités. |
+| [THREAT_MODEL.md](THREAT_MODEL.md) | Analyse des menaces STRIDE. |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Flux de développement et liste de contrôle des demandes de modification (PR). |
+| [BUILD.md](BUILD.md) | Construction et vérification reproductibles. |
 
 ---
 
 ## Support
 
-- **Questions / help:** [Discussions](https://github.com/mcp-tool-shop-org/ConsensusOS/discussions)
-- **Bug reports:** [Issues](https://github.com/mcp-tool-shop-org/ConsensusOS/issues)
+- **Questions / aide :** [Discussions](https://github.com/mcp-tool-shop-org/ConsensusOS/discussions)
+- **Signalement de bogues :** [Issues](https://github.com/mcp-tool-shop-org/ConsensusOS/issues)
 
 ---
 
-## License
+## Licence
 
 [MIT](LICENSE)

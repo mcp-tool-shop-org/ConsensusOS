@@ -8,9 +8,9 @@
 
 # ConsensusOS
 
-> Part of [MCP Tool Shop](https://mcptoolshop.com)
+> [MCP Tool Shop](https://mcptoolshop.com) 的一部分
 
-**Modular, zero-dependency control plane for multi-chain consensus governance.**
+**用于多链共识治理的模块化、无依赖的控制平面。**
 
 <p align="center">
   <a href="https://github.com/mcp-tool-shop-org/ConsensusOS/actions"><img src="https://img.shields.io/github/actions/workflow/status/mcp-tool-shop-org/ConsensusOS/npm.yml?branch=main&style=flat-square&label=CI" alt="CI"></a>
@@ -22,34 +22,34 @@
 
 ---
 
-## Why ConsensusOS?
+## 为什么选择 ConsensusOS？
 
-Running multi-chain infrastructure means trusting nodes you don't fully control, shipping releases that must not diverge, and governing configuration changes across networks that never sleep. Most teams glue this together with ad-hoc scripts and hope for the best.
+运行多链基础设施意味着您需要信任您无法完全控制的节点，发布必须保持一致的版本，并在永不停止的网络中管理配置更改。大多数团队使用临时脚本来完成这些任务，并寄希望于一切顺利。
 
-ConsensusOS replaces that hope with a **plugin-based control plane** where every module communicates through a shared event bus, every state transition is gated by fail-closed invariants, and the entire system history is deterministically replayable.
+ConsensusOS 用一个 **基于插件的控制平面** 替代了这种不确定性，其中每个模块通过共享事件总线进行通信，每个状态转换都受到失效保护机制的约束，并且整个系统的历史记录可以确定性地重放。
 
-- **Zero production dependencies** — nothing in your supply chain you didn't write.
-- **Frozen Plugin API v1** — stable contract that won't break your integrations.
-- **Fail-closed invariants** — invalid transitions are always rejected, never partially applied.
-- **Deterministic replay** — reproduce any system state from event history.
-- **Resource-bounded execution** — CPU, memory, and time limits enforced via tokens.
-- **Multi-chain adapters** — XRPL, Ethereum, and Cosmos out of the box.
+- **零生产依赖**：您的供应链中没有任何您没有编写的代码。
+- **冻结的插件 API v1**：稳定的接口，不会破坏您的集成。
+- **失效保护机制**：无效的转换始终会被拒绝，而不会部分应用。
+- **确定性重放**：可以从事件历史记录中重现任何系统状态。
+- **资源限制执行**：通过令牌强制执行 CPU、内存和时间限制。
+- **多链适配器**：XRPL、以太坊和 Cosmos 平台开箱即用。
 
 ---
 
-## Install
+## 安装
 
 ```bash
 npm install @mcptoolshop/consensus-os
 ```
 
-Requires **Node.js 18+**. Zero runtime dependencies.
+需要 **Node.js 18+**。没有运行时依赖。
 
 ---
 
-## Quick Start
+## 快速开始
 
-### Programmatic usage
+### 编程用法
 
 ```ts
 import {
@@ -89,7 +89,7 @@ console.log("Transition allowed:", verdict.allowed);
 await loader.shutdown();
 ```
 
-### Build a custom plugin
+### 构建自定义插件
 
 ```ts
 import { BasePlugin, ManifestBuilder } from "@mcptoolshop/consensus-os/plugin";
@@ -110,7 +110,7 @@ class MyMonitor extends BasePlugin {
 }
 ```
 
-### CLI
+### 命令行工具 (CLI)
 
 ```bash
 npx consensusos doctor     # Run health checks
@@ -123,7 +123,7 @@ npx consensusos adapters   # List and query chain adapters
 
 ---
 
-## Architecture
+## 架构
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -144,49 +144,49 @@ npx consensusos adapters   # List and query chain adapters
 └─────────────────────────────────────────────────┘
 ```
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the full specification.
+请参阅 [ARCHITECTURE.md](ARCHITECTURE.md) 以获取完整的规范。
 
 ---
 
-## API Surface
+## API 接口
 
-### Core
+### 核心
 
-| Export | Description |
-|--------|-------------|
-| `CoreLoader` | Plugin lifecycle orchestrator — register, boot, shutdown |
-| `CoreEventBus` | Ordered, typed, replayable event bus with wildcard subscriptions |
-| `CoreInvariantEngine` | Fail-closed invariant engine with append-only registration |
-| `createLogger(scope)` | Structured logger scoped to a module |
+| 导出 | 描述 |
+| -------- | ------------- |
+| `CoreLoader` | 插件生命周期管理器：注册、启动、停止 |
+| `CoreEventBus` | 有序、类型化、可重放的事件总线，支持通配符订阅 |
+| `CoreInvariantEngine` | 失效保护机制引擎，采用仅追加注册方式 |
+| `createLogger(scope)` | 模块范围的结构化日志记录器 |
 
-### Modules
+### 模块
 
-| Factory | Purpose |
-|---------|---------|
-| `createHealthSentinel()` | Node health monitoring via heartbeats |
-| `createReleaseVerifier()` | Software release hash verification |
-| `createConfigGuardian()` | Configuration schema validation and migration |
-| `createSandboxPlugin()` | Isolated simulation, replay, and amendment engine |
-| `createGovernorPlugin()` | Token-based execution, policy enforcement, build queue |
+| 工厂 | 用途 |
+| --------- | --------- |
+| `createHealthSentinel()` | 通过心跳监控节点健康状况 |
+| `createReleaseVerifier()` | 软件发布哈希验证 |
+| `createConfigGuardian()` | 配置模式验证和迁移 |
+| `createSandboxPlugin()` | 隔离的模拟、重放和修改引擎 |
+| `createGovernorPlugin()` | 基于令牌的执行、策略执行、构建队列 |
 
-### Adapters
+### 适配器
 
-| Factory | Chain | Status |
-|---------|-------|--------|
-| `createXrplAdapter()` | XRPL | Implemented |
-| `createEthereumAdapter()` | Ethereum | Implemented |
-| `createCosmosAdapter()` | Cosmos | Implemented |
+| 工厂 | Chain | 状态 |
+| --------- | ------- | -------- |
+| `createXrplAdapter()` | XRPL | 已实现 |
+| `createEthereumAdapter()` | 以太坊 | 已实现 |
+| `createCosmosAdapter()` | Cosmos | 已实现 |
 
-### Plugin SDK
+### 插件 SDK
 
-| Export | Description |
-|--------|-------------|
-| `BasePlugin` | Abstract base class with lifecycle defaults and convenience methods |
-| `ManifestBuilder` | Fluent builder for type-safe plugin manifests |
-| `validatePlugin()` | Pre-registration validation with errors and warnings |
-| `AttestationPipeline` | Release attestation and build provenance |
+| 导出 | 描述 |
+| -------- | ------------- |
+| `BasePlugin` | 具有默认生命周期和便捷方法的抽象基类 |
+| `ManifestBuilder` | 用于类型安全插件清单的流畅构建器 |
+| `validatePlugin()` | 预注册验证，包含错误和警告 |
+| `AttestationPipeline` | 发布证明和构建溯源 |
 
-### Subpath Exports
+### 子路径导出
 
 ```ts
 import { ... } from "@mcptoolshop/consensus-os";          // Full API
@@ -196,45 +196,45 @@ import { ... } from "@mcptoolshop/consensus-os/cli";      // CLI dispatch
 
 ---
 
-## Testing
+## 测试
 
 ```bash
 npm test         # Full suite (295 tests)
 npx vitest       # Watch mode
 ```
 
-Test categories:
-- **Architecture** (16 tests) — structural invariant enforcement
-- **Security** (27 tests) — abuse resistance and determinism
-- **Stress** (22 tests) — edge cases and throughput
-- **Unit** (230 tests) — component-level coverage
+测试类别：
+- **架构** (16 个测试) — 结构性不变性强制
+- **安全** (27 个测试) — 防滥用和确定性
+- **压力** (22 个测试) — 边缘情况和吞吐量
+- **单元** (230 个测试) — 组件级别覆盖
 
 ---
 
-## Documentation
+## 文档
 
-| Document | Purpose |
-|----------|---------|
-| [QUICKSTART.md](QUICKSTART.md) | Get running in 3 minutes |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Frozen v1.0 architecture spec |
-| [PLUGIN_GUIDE.md](PLUGIN_GUIDE.md) | How to write a plugin |
-| [ADAPTER_GUIDE.md](ADAPTER_GUIDE.md) | How to create a chain adapter |
-| [SANDBOX_GUIDE.md](SANDBOX_GUIDE.md) | Sandbox, replay, and amendment walkthrough |
-| [GOVERNOR_GUIDE.md](GOVERNOR_GUIDE.md) | Token execution, policies, build queue |
-| [SECURITY.md](SECURITY.md) | Security policy and vulnerability reporting |
-| [THREAT_MODEL.md](THREAT_MODEL.md) | STRIDE threat analysis |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Development workflow and PR checklist |
-| [BUILD.md](BUILD.md) | Reproducible build and verification |
-
----
-
-## Support
-
-- **Questions / help:** [Discussions](https://github.com/mcp-tool-shop-org/ConsensusOS/discussions)
-- **Bug reports:** [Issues](https://github.com/mcp-tool-shop-org/ConsensusOS/issues)
+| 文档 | 用途 |
+| ---------- | --------- |
+| [QUICKSTART.md](QUICKSTART.md) | 3 分钟内开始使用 |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | 冻结的 v1.0 架构规范 |
+| [PLUGIN_GUIDE.md](PLUGIN_GUIDE.md) | 如何编写插件 |
+| [ADAPTER_GUIDE.md](ADAPTER_GUIDE.md) | 如何创建链适配器 |
+| [SANDBOX_GUIDE.md](SANDBOX_GUIDE.md) | 沙箱、回放和修改流程。 |
+| [GOVERNOR_GUIDE.md](GOVERNOR_GUIDE.md) | 令牌执行、策略、构建队列。 |
+| [SECURITY.md](SECURITY.md) | 安全策略和漏洞报告。 |
+| [THREAT_MODEL.md](THREAT_MODEL.md) | STRIDE 威胁分析。 |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | 开发流程和代码审查清单。 |
+| [BUILD.md](BUILD.md) | 可重现的构建和验证。 |
 
 ---
 
-## License
+## 支持
+
+- **问题/帮助：** [讨论](https://github.com/mcp-tool-shop-org/ConsensusOS/discussions)
+- **Bug 报告：** [问题](https://github.com/mcp-tool-shop-org/ConsensusOS/issues)
+
+---
+
+## 许可证
 
 [MIT](LICENSE)
