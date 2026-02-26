@@ -3,7 +3,9 @@
 </p>
 
 <p align="center">
-  <img src="logo.png" width="400" alt="ConsensusOS">
+  
+            <img src="https://raw.githubusercontent.com/mcp-tool-shop-org/brand/main/logos/ConsensusOS/readme.png"
+           width="400" alt="ConsensusOS">
 </p>
 
 # कंसेंससओएस (ConsensusOS)
