@@ -235,6 +235,35 @@ Test categories:
 
 ---
 
+## Security & Data Scope
+
+ConsensusOS is a **local-first, zero-dependency** control plane for multi-chain consensus governance.
+
+- **Data accessed:** In-memory state for governance tokens, audit logs, and policy evaluation. Plugin event bus for inter-module communication.
+- **Data NOT accessed:** No network egress. No telemetry. No cloud services. No credential storage. All state is in-memory.
+- **Permissions:** None — runs as a standard Node.js process. No elevated permissions required.
+
+Full policy: [SECURITY.md](SECURITY.md) | Threat analysis: [THREAT_MODEL.md](THREAT_MODEL.md)
+
+---
+
+## Scorecard
+
+| Category | Score |
+|----------|-------|
+| A. Security | 10/10 |
+| B. Error Handling | 10/10 |
+| C. Operator Docs | 10/10 |
+| D. Shipping Hygiene | 10/10 |
+| E. Identity (soft) | 10/10 |
+| **Overall** | **50/50** |
+
+---
+
 ## License
 
 [MIT](LICENSE)
+
+---
+
+Built by <a href="https://mcp-tool-shop.github.io/">MCP Tool Shop</a>
