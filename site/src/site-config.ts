@@ -15,7 +15,7 @@ export const config: SiteConfig = {
     headlineAccent: 'plugin-first.',
     description: 'Modular, zero-dependency control plane for multi-chain consensus governance. Every state transition is fail-closed, every event is replayable, every plugin has a frozen API.',
     primaryCta: { href: '#quickstart', label: 'Quick start' },
-    secondaryCta: { href: '#modules', label: 'See modules' },
+    secondaryCta: { href: 'handbook/', label: 'Read the Handbook' },
     previews: [
       {
         label: 'Install',
