@@ -74,9 +74,10 @@ async function defaultHashFn(path: string, algorithm: HashAlgorithm): Promise<st
 }
 
 async function defaultSignatureVerifier(_hash: string, _signature: string): Promise<boolean> {
-  // Placeholder — real implementation would use public key verification
-  // For now, accept any non-empty signature
-  return _signature.length > 0;
+  // Fail-closed: reject all signatures until a real verifier is configured.
+  // Callers should provide a signatureVerifier via ReleaseVerifierConfig
+  // that implements ED25519 or ECDSA public key verification.
+  return false;
 }
 
 // ─── Plugin ─────────────────────────────────────────────────────────
